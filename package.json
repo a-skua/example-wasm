@@ -4,11 +4,17 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "prebuild": "npm run asbuild",
     "build": "remix vite:build",
+    "predev": "npm run asbuild",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "test": "node tests"
   },
   "dependencies": {
     "@remix-run/node": "^2.11.0",
@@ -24,6 +30,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "assemblyscript": "^0.27.29",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.38.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -39,5 +46,11 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
   }
 }
