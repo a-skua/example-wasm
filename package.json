@@ -11,8 +11,8 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
-    "asbuild:debug": "asc assembly/index.ts --target debug",
-    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild:debug": "asc assembly/index.ts --target debug --enable simd",
+    "asbuild:release": "asc assembly/index.ts --target release --enable simd",
     "asbuild": "npm run asbuild:debug && npm run asbuild:release",
     "test": "node tests"
   },

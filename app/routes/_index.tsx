@@ -1,5 +1,7 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Add } from "~/component/Add";
+import { Bench } from "~/component/Bench";
+import { Editor } from "~/component/Editor";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,8 +12,16 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="p-2">
-      add(a, b): <Add />
-    </div>
+    <>
+      <div className="pt-2 pl-2">
+        <Add />
+      </div>
+      <div className="pt-2 pl-2">
+        <Editor />
+      </div>
+      <div className="pt-2 pl-2">
+        <Bench />
+      </div>
+    </>
   );
 }
