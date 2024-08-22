@@ -4,21 +4,21 @@ import * as wasm from "~/asbuild/release";
 import { bench } from "~/lib/bench";
 
 type Time<R> = {
-  result: R,
-  time: number,
+  result: R;
+  time: number;
 };
 
 type Result<R extends number | bigint> = {
-  js: Time<R>,
-  wasm: Time<R>,
+  js: Time<R>;
+  wasm: Time<R>;
 };
 
 type Results = {
-  count?: Result<number>,
-  a?: Result<number>,
-  b?: Result<bigint>,
-  c: Result<number>,
-  d: Result<bigint>,
+  count?: Result<number>;
+  a?: Result<number>;
+  b?: Result<bigint>;
+  c: Result<number>;
+  d: Result<bigint>;
 };
 
 function jsFibB(n: bigint): bigint {
@@ -75,8 +75,13 @@ async function fibD(n: bigint): Promise<Result<bigint>> {
 }
 
 const test = [
-  ...Array.from({length: 90}, (_, i) => i + 1),
-  100, 200, 300, 400, 500, 1000,
+  ...Array.from({ length: 90 }, (_, i) => i + 1),
+  100,
+  200,
+  300,
+  400,
+  500,
+  1000,
 ];
 
 async function run(): Promise<Results[]> {
@@ -88,7 +93,7 @@ async function run(): Promise<Results[]> {
     const c = await fibC(n);
     const d = await fibD(BigInt(n));
     results.push({ count, a, b, c, d });
-  };
+  }
   return results;
 }
 
@@ -97,9 +102,14 @@ export function Bench() {
 
   return (
     <>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded" onClick={async () => {
-        setResults(await run());
-      }}>ベンチマーク: fib(n)</button>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded"
+        onClick={async () => {
+          setResults(await run());
+        }}
+      >
+        ベンチマーク: fib(n)
+      </button>
       <table className="table-auto">
         <thead>
           <tr>
@@ -121,7 +131,10 @@ export function Bench() {
             <tr key={i}>
               <td>{test[i]}</td>
               <td>{result.count?.wasm.result.toLocaleString() ?? "-"}</td>
-              <td>{result.a?.js.result ?? "-"} (JS) , {result.a?.wasm.result ?? "-"} (Wasm)</td>
+              <td>
+                {result.a?.js.result ?? "-"} (JS) ,{" "}
+                {result.a?.wasm.result ?? "-"} (Wasm)
+              </td>
               <td>{result.a?.js.time.toFixed(2) ?? "-"}</td>
               <td>{result.a?.wasm.time.toFixed(2) ?? "-"}</td>
               <td>{result.b?.js.time.toFixed(2) ?? "-"}</td>

@@ -1,12 +1,12 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { add as jsAdd } from "~/lib/calc";
 import * as wasm from "~/asbuild/release";
 import * as js from "~/lib/add";
 
 type Result<T> = {
-  js: T,
-  wasm: T,
-}
+  js: T;
+  wasm: T;
+};
 
 type Add<T> = (a: T, b: T) => Result<T>;
 
@@ -42,14 +42,31 @@ function _Add({ add }: _AddProps) {
 
   return (
     <>
-      <input className="border-2 p-1 rounded" ref={inputA} type="number" defaultValue="0" placeholder="a" />
-      <span> + </span>
-      <input className="border-2 p-1 rounded" ref={inputB} type="number" defaultValue="0" placeholder="b" />
-      <button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded ml-2" onClick={() => {
-        const a = Number(inputA.current?.value || 0);
-        const b = Number(inputB.current?.value || 0);
-        setResult(add(a, b));
-      }}> = </button>
+      <input
+        className="border-2 p-1 rounded"
+        ref={inputA}
+        type="number"
+        defaultValue="0"
+        placeholder="a"
+      />
+      <span>+</span>
+      <input
+        className="border-2 p-1 rounded"
+        ref={inputB}
+        type="number"
+        defaultValue="0"
+        placeholder="b"
+      />
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded ml-2"
+        onClick={() => {
+          const a = Number(inputA.current?.value || 0);
+          const b = Number(inputB.current?.value || 0);
+          setResult(add(a, b));
+        }}
+      >
+        =
+      </button>
       {result && (
         <>
           <span className="px-2">{result.js} (JS)</span>
@@ -66,16 +83,29 @@ export function Add() {
     <div className="table border-spacing-2">
       <div className="table-row">
         <span className="table-cell">add(a, b) :</span>
-        <span className="table-cell"><_Add add={add} /></span>
+        <span className="table-cell">
+          <_Add add={add} />
+        </span>
       </div>
+    </div>
+  );
+}
+
+export function AddInt() {
+  return (
+    <div className="table border-spacing-2">
       <div className="table-row">
         <span className="table-cell">add(a: u8, b: u8) :</span>
-        <span className="table-cell"><_Add add={addU8} /></span>
+        <span className="table-cell">
+          <_Add add={addU8} />
+        </span>
       </div>
       <div className="table-row">
         <span className="table-cell">add(a: i8, b: i8) :</span>
-        <span className="table-cell"><_Add add={addI8} /></span>
+        <span className="table-cell">
+          <_Add add={addI8} />
+        </span>
       </div>
-  </div>
+    </div>
   );
 }
